@@ -35,7 +35,7 @@ client.connect(err => {
       img: Buffer.from(encImg, 'base64')
     };
 
-    eventCollection.insertOne({ title, description, image })
+    eventCollection.insertOne({ title, date, description, image })
       .then(result => {
         res.send(result.insertedCount > 0);
       })
@@ -57,6 +57,12 @@ client.connect(err => {
     volunteerCollection.insertOne({ fullName, email, date, description, title })
       .then(result => {
         res.send(result.insertedCount > 0)
+      })
+  })
+  app.get('/volunteers', (req, res) => {
+    volunteerCollection.find({})
+      .toArray((err, documents) => {
+        res.send(documents);
       })
   })
 });
